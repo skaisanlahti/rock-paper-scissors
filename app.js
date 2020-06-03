@@ -30,14 +30,14 @@ Take input with prompt(), normalize input to capitalized string.
 Check if input is a valid hand.
 =============================================================================*/
 function playerPlay(){
-    let isValidInput = false;
+    let inputIsValid = false;
     let playerInput = "";
-    while (!isValidInput) {
+    while (!inputIsValid) {
         playerInput = prompt("Choose a hand to play: rock, paper or scissors?").toLowerCase();
         playerInput = `${playerInput[0].toUpperCase()}${playerInput.slice(1)}`;
         if (playerInput === "Rock" || playerInput === "Paper" || playerInput === "Scissors")
         {
-            isValidInput = true;
+            inputIsValid = true;
         } else {
             console.log(`${playerInput} is not a valid hand! Please choose "rock", "paper" or "scissors".`);
         }
@@ -96,18 +96,18 @@ Ask how many rounds the player wants to play. Validate input.
 Play the appropriate number of rounds and announce winner at the end.
 =============================================================================*/
 function selectRounds(){
-    let isValidInput = false;
+    let inputIsValid = false;
     let roundInput = 0;
-    while (!isValidInput){
+    while (!inputIsValid){
         roundInput = prompt("How many rounds do you want to play?");
         if (roundInput > 0 && !isNaN(roundInput))
         {
-            isValidInput = true;
+            inputIsValid = true;
         }else {
             console.log(`${roundInput} is not a valid round number. Please choose a number.`);
         }
     }
-    console.log(`OK! Let's play ${rounds} rounds!`);
+    console.log(`OK! Let's play ${roundInput} rounds!`);
     return roundInput;
 }
 function game(){
