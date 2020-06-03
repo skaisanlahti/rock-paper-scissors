@@ -1,10 +1,10 @@
 /*=== App overview ===
 Rock, Paper, Scissors game.
-Features:
+Specification:
 - Select random hand for computer
 - Take player hand with prompt()
 - Game logic to play a round and define a winner
-- Play 5 rounds and track score
+- Select how many rounds the player wants to play and play them
 =============================================================================*/
 let playerSelection;
 let computerSelection;
@@ -13,21 +13,18 @@ let roundCounter = 0;
 let playerScore = 0;
 let computerScore = 0;
 /*=== Helper function to get a random array index ===
-- min and max are both included in range
+min and max are both included in range
 =============================================================================*/
 function getRandomInteger(min, max) {
     return Math.floor(Math.random() * (max - min + 1) ) + min;
 }
 /*=== Get computer hand ===
-Define hands and return a random hand.
 =============================================================================*/
 function computerPlay(){
     const hands = ["Rock", "Paper", "Scissors"];
     return hands[getRandomInteger(0,2)];
 }
 /*=== Get player hand ===
-Take input with prompt(), normalize input to capitalized string.
-Check if input is a valid hand.
 =============================================================================*/
 function playerPlay(){
     let inputIsValid = false;
@@ -52,35 +49,35 @@ function playerPlay(){
 function playRound(computerSelection, playerSelection){
     playerSelection = playerPlay();
     computerSelection = computerPlay();
-    console.log(`Player plays ${playerSelection}. Computer plays ${computerSelection}.`)
+    let roundLog = `Player plays ${playerSelection}. Computer plays ${computerSelection}.`;
     if (computerSelection === playerSelection){
-        console.log("Draw!");
+        roundLog += ` Draw!`;
     } else {
         switch (computerSelection) {
             case "Rock":
                 if (playerSelection === "Paper"){
-                    console.log(`Player wins!`);
+                    roundLog += ` Player wins!`;
                     playerScore += 1;
                 } else {
-                    console.log(`Computer wins!`);
+                    roundLog += ` Computer wins!`;
                     computerScore += 1;
                 }
             break;
             case "Paper" :
                 if (playerSelection === "Scissors"){
-                    console.log(`Player wins!`);
+                    roundLog += ` Player wins!`;
                     playerScore += 1;
                 } else {
-                    console.log(`Computer wins!`);
+                    roundLog += ` Computer wins!`;
                     computerScore += 1;
                 }
             break;
             case "Scissors" :
                 if (playerSelection === "Rock"){
-                    console.log(`Player wins!`);
+                    roundLog += ` Player wins!`;
                     playerScore += 1;
                 } else {
-                    console.log(`Computer wins!`);
+                    roundLog += ` Computer wins!`;
                     computerScore += 1;
                 }
             break;
@@ -88,12 +85,11 @@ function playRound(computerSelection, playerSelection){
                 console.log(`Something went wrong.`);
         }
     }
+    console.log(roundLog);
     roundCounter += 1;
-    console.log(`Round ${roundCounter} score: ${playerScore} - ${computerScore}`);
+    console.log(`Round ${roundCounter} - Score: Player ${playerScore} - Computer ${computerScore}`);
 }
 /*=== Play multiple rounds ===
-Ask how many rounds the player wants to play. Validate input.
-Play the appropriate number of rounds and announce winner at the end.
 =============================================================================*/
 function selectRounds(){
     let inputIsValid = false;
@@ -104,7 +100,7 @@ function selectRounds(){
         {
             inputIsValid = true;
         }else {
-            console.log(`${roundInput} is not a valid round number. Please choose a number.`);
+            console.log(`${roundInput} is not a valid round number. Please choose a number higher than 0.`);
         }
     }
     console.log(`OK! Let's play ${roundInput} rounds!`);
@@ -116,11 +112,11 @@ function game(){
         playRound();
     }
     if (playerScore === computerScore) {
-        console.log(`Game over! After ${rounds} rounds the game is a draw!`);
+        console.log(`Game over! The game is a draw!`);
     }else if (playerScore > computerScore){
-        console.log(`Game over! After ${rounds} rounds player wins!`);
+        console.log(`Game over! Player wins!`);
     }else {
-        console.log(`Game over! After ${rounds} rounds computer wins!`);
+        console.log(`Game over! Computer wins!`);
     }
 }
 /*=== Run game ===
