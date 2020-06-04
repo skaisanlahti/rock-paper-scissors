@@ -71,12 +71,12 @@ function computerPlay(){
 function playRound(){
     playerSelection = this.textContent;
     computerSelection = computerPlay();
-    determineWinner(playerSelection, computerSelection);
+    determineWinner();
     updateDisplays();
     checkWinConditions();
 }
 
-function determineWinner(playerSelection, computerSelection){
+function determineWinner(){
     roundLog = `Player plays ${playerSelection}. Computer plays ${computerSelection}.`;
     if (computerSelection === playerSelection){
         roundLog += ` Draw!`;
