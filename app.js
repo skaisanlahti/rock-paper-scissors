@@ -2,16 +2,45 @@
 Rock, Paper, Scissors game.
 Specification:
 - Select random hand for computer
-- Take player hand with prompt()
+- Select player hand with buttons
 - Game logic to play a round and define a winner
-- Select how many rounds the player wants to play and play them
+- Announce winner after 5 points and reset game
 =============================================================================*/
+const pointsToWin = 5;
 let playerSelection;
 let computerSelection;
-let rounds = 0;
 let roundCounter = 0;
 let playerScore = 0;
 let computerScore = 0;
+let roundLog = "";
+/*=== DOM Elements ===
+=============================================================================*/
+const roundDisplay = document.querySelector(".rps-score__round");
+const scoreDisplay = document.querySelector(".rps-score__points");
+const logDisplay = document.querySelector(".rps-round-log");
+const winnerDisplay = document.querySelector(".rps-round-log__winner");
+const handButtons = Array.from(document.querySelectorAll(".rps-buttons button"));
+/*=== Event Listeners ===
+=============================================================================*/
+handButtons.forEach(button => {
+    if (button.textContent === "Reset") button.addEventListener("click", resetGame);
+    else button.addEventListener("click", playRound);
+});
+/*=== Reset Game ===
+=============================================================================*/
+function resetGame(){
+    roundCounter = 0;
+    playerScore = 0;
+    computerScore = 0;
+    winnerDisplay.classList.add("invisible");
+    logDisplay.textContent = "Choose a hand below to start playing.";
+    roundDisplay.textContent = `Round 1`;
+    scoreDisplay.textContent = `Player ${playerScore} - ${computerScore} Computer`;
+    handButtons.forEach(button => {
+        if (button.textContent === "Reset") button.classList.add("hide");
+        else button.classList.remove("hide");
+    });
+}
 /*=== Helper function to get a random array index ===
 min and max are both included in range
 =============================================================================*/
@@ -24,32 +53,21 @@ function computerPlay(){
     const hands = ["Rock", "Paper", "Scissors"];
     return hands[getRandomInteger(0,2)];
 }
-/*=== Get player hand ===
-=============================================================================*/
-function playerPlay(){
-    let inputIsValid = false;
-    let playerInput = "";
-    while (!inputIsValid) {
-        playerInput = prompt("Choose a hand to play: rock, paper or scissors?").toLowerCase();
-        playerInput = `${playerInput[0].toUpperCase()}${playerInput.slice(1)}`;
-        if (playerInput === "Rock" || playerInput === "Paper" || playerInput === "Scissors")
-        {
-            inputIsValid = true;
-        } else {
-            console.log(`${playerInput} is not a valid hand! Please choose "rock", "paper" or "scissors".`);
-        }
-    }
-    return playerInput;
-}
 /*=== Game logic ===
 - Select hands
-- Define winner
-- Calculate points
+- Determine winner
+- Update displays
+- Check win conditions
 =============================================================================*/
-function playRound(computerSelection, playerSelection){
-    playerSelection = playerPlay();
+function playRound(){
+    playerSelection = this.textContent;
     computerSelection = computerPlay();
-    let roundLog = `Player plays ${playerSelection}. Computer plays ${computerSelection}.`;
+    roundLog = `Player plays ${playerSelection}. Computer plays ${computerSelection}.`;
+    determineWinner(playerSelection, computerSelection);
+    updateDisplays();
+    checkWinConditions();
+}
+function determineWinner(playerSelection, computerSelection){
     if (computerSelection === playerSelection){
         roundLog += ` Draw!`;
     } else {
@@ -85,40 +103,23 @@ function playRound(computerSelection, playerSelection){
                 console.log(`Something went wrong.`);
         }
     }
-    console.log(roundLog);
     roundCounter += 1;
-    console.log(`Round ${roundCounter} - Score: Player ${playerScore} - Computer ${computerScore}`);
 }
-/*=== Play multiple rounds ===
-=============================================================================*/
-function selectRounds(){
-    let inputIsValid = false;
-    let roundInput = 0;
-    while (!inputIsValid){
-        roundInput = prompt("How many rounds do you want to play?");
-        if (roundInput > 0 && !isNaN(roundInput))
-        {
-            inputIsValid = true;
-        }else {
-            console.log(`${roundInput} is not a valid round number. Please choose a number higher than 0.`);
-        }
-    }
-    console.log(`OK! Let's play ${roundInput} rounds!`);
-    return roundInput;
+function updateDisplays(){
+    logDisplay.textContent = roundLog;
+    roundDisplay.textContent = `Round ${roundCounter}`;
+    scoreDisplay.textContent = `Player ${playerScore} - ${computerScore} Computer`;
 }
-function game(){
-    rounds = selectRounds();
-    for (let i = 0; i < rounds; i++){
-        playRound();
-    }
-    if (playerScore === computerScore) {
-        console.log(`Game over! The game is a draw!`);
-    }else if (playerScore > computerScore){
-        console.log(`Game over! Player wins!`);
-    }else {
-        console.log(`Game over! Computer wins!`);
+function checkWinConditions(){
+    if (playerScore >= pointsToWin || computerScore >= pointsToWin) {
+        handButtons.forEach(button => {
+            if (button.textContent === "Reset") button.classList.remove("hide");
+            else button.classList.add("hide");
+        });
+        winnerDisplay.textContent = playerScore > computerScore ? `Player won the game!` : `Computer won the game!`;
+        winnerDisplay.classList.remove("invisible");
     }
 }
 /*=== Run game ===
 =============================================================================*/
-game();
+resetGame();

@@ -1,0 +1,159 @@
+/*=== Rock Paper Scissors Styles ===
+- Score Board
+- Buttons for playing hands
+- Log for what happened each round
+=============================================================================*/
+/*=== imports ===
+=============================================================================*/
+/*=== Fonts ===
+=============================================================================*/
+@font-face {
+  font-family: "raleway";
+  src: local("Raleway-Regular"), url("../fonts/RalewayWOFF/Raleway-Regular.WOFF") format("woff"), url("../fonts/RalewayTTF/Raleway-Regular.ttf") format("truetype");
+  font-stretch: normal;
+  font-style: normal;
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "raleway";
+  src: local("Raleway-Regular-Italic"), url("../fonts/RalewayWOFF/Raleway-Regular-Italic.WOFF") format("woff"), url("../fonts/RalewayTFF/Raleway-Regular-Italic.woff") format("truetype");
+  font-stretch: normal;
+  font-style: italic;
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "raleway";
+  src: local("Raleway-Bold"), url("../fonts/RalewayWOFF/Raleway-Bold.WOFF") format("woff"), url("../fonts/RalewayTTF/Raleway-Bold.ttf") format("truetype");
+  font-stretch: normal;
+  font-style: normal;
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: "raleway";
+  src: local("Raleway-Bold-Italic"), url("../fonts/RalewayWOFF/Raleway-Bold-Italic.WOFF") format("woff"), url("../fonts/RalewayTTF/Raleway-Bold-Italic.ttf") format("truetype");
+  font-stretch: normal;
+  font-style: italic;
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: "raleway";
+  src: local("Raleway-ExtraBold"), url("../fonts/RalewayWOFF/Raleway-ExtraBold.WOFF") format("woff"), url("../fonts/RalewayTTF/Raleway-ExtraBold.ttf") format("truetype");
+  font-stretch: normal;
+  font-style: normal;
+  font-weight: 800;
+}
+
+@font-face {
+  font-family: "raleway";
+  src: local("Raleway-ExtraBold-Italic"), url("../fonts/RalewayWOFF/Raleway-ExtraBold-Italic.WOFF") format("woff"), url("../fonts/RalewayTTF/Raleway-ExtraBold-Italic.ttf") format("truetype");
+  font-stretch: normal;
+  font-style: italic;
+  font-weight: 800;
+}
+
+/*=== Styles ===
+=============================================================================*/
+html, body {
+  font-family: raleway;
+  color: #e7e5e4;
+  background-color: #111312;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#0c0d0d), to(#3b4045));
+  background-image: linear-gradient(#0c0d0d, #3b4045);
+}
+
+.rps-main {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  min-height: 100vh;
+}
+
+.rps-header {
+  margin-bottom: 40px;
+  font-size: 60px;
+  font-weight: bold;
+}
+
+.rps-score {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-bottom: 40px;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.rps-score__round {
+  margin-bottom: 20px;
+}
+
+.rps-round-log {
+  margin-bottom: 20px;
+  font-size: 20px;
+}
+
+.rps-round-log__winner {
+  margin-bottom: 20px;
+  font-size: 60px;
+}
+
+.rps-buttons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.rps-buttons button {
+  font-size: 40px;
+  padding: 20px 40px;
+  margin: 10px 20px;
+  border-width: 3px;
+}
+
+.rps-buttons button:default, .rps-buttons button:focus {
+  color: #111312;
+  background-color: #e4e6e7;
+}
+
+.rps-buttons button:hover {
+  color: #111312;
+  background-color: #b3d5e6;
+}
+
+.rps-buttons button:active {
+  color: #111312;
+  background-color: #8cbfd9;
+}
+
+.hide {
+  display: none;
+}
+
+.invisible {
+  visibility: hidden;
+}
+/*# sourceMappingURL=main.css.map */

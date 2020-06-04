@@ -1,0 +1,79 @@
+/*=== Rock Paper Scissors Styles ===
+- Score Board
+- Buttons for playing hands
+- Log for what happened each round
+=============================================================================*/
+/*=== imports ===
+=============================================================================*/
+@import "_fonts.scss";
+/*=== Styles ===
+=============================================================================*/
+html, body {
+    font-family: raleway;
+    color: hsl(25,5%,90%);
+    background-color: hsl(145,5%,7%);
+    background-image: linear-gradient(hsl(200,5%,5%),hsl(210,8%,25%));
+}
+
+.rps-main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+.rps-header {
+    margin-bottom: 40px;
+    font-size: 60px;
+    font-weight: bold;
+}
+.rps-score {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 40px;
+    font-size: 30px;
+    font-weight: bold;
+
+    &__round {
+        margin-bottom: 20px;
+    }
+}
+.rps-round-log {
+    margin-bottom: 20px;
+    font-size: 20px;
+    &__winner {
+        margin-bottom: 20px;
+        font-size: 60px;
+    }
+}
+
+.rps-buttons {
+    display: flex;
+    button {
+        font-size: 40px;
+        padding: 20px 40px;
+        margin: 10px 20px;
+        border-width: 3px;
+        &:default, &:focus {
+            color: hsl(145,5%,7%);
+            background-color: hsl(200,5%,90%);
+        }
+        &:hover {
+            color: hsl(145,5%,7%);
+            background-color: hsl(200,50%,80%);
+        }
+        &:active {
+            color: hsl(145,5%,7%);
+            background-color: hsl(200,50%,70%);
+        }
+    }
+    
+}
+.hide {
+    display: none;
+}
+.invisible {
+    visibility: hidden;
+}
