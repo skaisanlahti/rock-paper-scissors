@@ -29,6 +29,7 @@ html, body {
     margin-bottom: 40px;
     font-size: 60px;
     font-weight: bold;
+    text-align: center;
 }
 
 .rps-score {
@@ -41,7 +42,33 @@ html, body {
     font-weight: bold;
 
     &__round {
+        display: inline-block;
+        text-align: left;
         margin-bottom: 20px;
+    }
+
+    &__round-counter {
+        display: inline-block;
+        text-align: right;
+        width: 40px;
+    }
+
+    &__point-bar {
+        display: grid;
+        grid-template-columns: 1fr 2fr 1fr;
+    }
+
+    &__player {
+        text-align: right;
+    }
+    
+    &__computer {
+        text-align: left;
+    }
+
+    &__points {
+        display: inline-block;
+        text-align: center;
     }
 }
 
@@ -56,12 +83,15 @@ html, body {
 
 .rps-buttons {
     display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 
     button {
         font-size: 40px;
-        padding: 20px 40px;
-        margin: 10px 20px;
+        padding: 10px 20px;
         border-width: 3px;
+        margin: 0px 10px;
+        width: 240px;
 
         &:default, &:focus {
             color: hsl(145,5%,7%);

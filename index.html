@@ -10,15 +10,18 @@
     <main class="rps-main">
         <header class="rps-header">Rock Paper Scissors</header>
         <section class="rps-score">
-            <div class="rps-score__round">
-                Round 1
+            <div>
+                <div class="rps-score__round">Round</div>
+                <div class="rps-score__round-counter">1</div>
             </div>
-            <div class="rps-score__points">
-                Player 0 - 1 Computer
+            <div class="rps-score__point-bar">
+                <div class="rps-score__player">Player</div>
+                <div class="rps-score__points">0 - 1</div>
+                <div class="rps-score__computer">Computer</div>
             </div>
         </section>
         <section class="rps-round-log">Player plays Rock. Computer plays Paper. Computer wins!</section>
-        <div class="rps-round-log__winner invisible">Winner</div>
+        <section class="rps-round-log__winner invisible">Winner</section>
         <section class="rps-buttons">
             <button>Rock</button>
             <button>Paper</button>

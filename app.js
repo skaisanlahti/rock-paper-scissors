@@ -7,23 +7,20 @@ Specification:
 - Announce winner after 5 points and reset game
 =============================================================================*/
 
-/*=== Variables ===
-=============================================================================*/
-const pointsToWin = 5;
-let playerSelection;
-let computerSelection;
-let roundCounter = 0;
-let playerScore = 0;
-let computerScore = 0;
-let roundLog = "";
-
 /*=== DOM Elements ===
 =============================================================================*/
-const roundDisplay = document.querySelector(".rps-score__round");
+const roundDisplay = document.querySelector(".rps-score__round-counter");
 const scoreDisplay = document.querySelector(".rps-score__points");
 const logDisplay = document.querySelector(".rps-round-log");
 const winnerDisplay = document.querySelector(".rps-round-log__winner");
 const handButtons = Array.from(document.querySelectorAll(".rps-buttons button"));
+
+/*=== Variables ===
+=============================================================================*/
+const pointsToWin = 5;
+let roundCounter = 0;
+let playerScore = 0;
+let computerScore = 0;
 
 /*=== Event Listeners ===
 =============================================================================*/
@@ -32,97 +29,81 @@ handButtons.forEach(button => {
     else button.addEventListener("click", playRound);
 });
 
-/*=== Reset Game ===
+/*=== Event Handlers ===
 =============================================================================*/
 function resetGame(){
     roundCounter = 0;
     playerScore = 0;
     computerScore = 0;
+    initializeDisplays(winnerDisplay, logDisplay, roundDisplay, scoreDisplay, handButtons);
+}
+function playRound(){
+    const playerSelection = this.textContent;
+    const computerSelection = getComputerHand();
+    const results = determineWinner(playerSelection, computerSelection);
+    updateGameState(logDisplay, roundDisplay, scoreDisplay, results);
+    checkWinConditions(winnerDisplay, handButtons, pointsToWin);
+}
+
+/*=== Functions ===
+=============================================================================*/
+function initializeDisplays(winnerDisplay, logDisplay, roundDisplay, scoreDisplay, handButtons){
     winnerDisplay.classList.add("invisible");
     logDisplay.textContent = `Choose a hand below to start playing. First to ${pointsToWin} points wins!`;
-    roundDisplay.textContent = `Round 1`;
-    scoreDisplay.textContent = `Player ${playerScore} - ${computerScore} Computer`;
+    roundDisplay.textContent = `1`;
+    scoreDisplay.textContent = `${playerScore} - ${computerScore}`;
     handButtons.forEach(button => {
         if (button.textContent === "Reset") button.classList.add("hide");
         else button.classList.remove("hide");
     });
 }
-
-/*=== Helper function to get a random array index ===
-min and max are both included in range
-=============================================================================*/
-function getRandomInteger(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) ) + min;
-}
-
-/*=== Get computer hand ===
-=============================================================================*/
-function computerPlay(){
+function getComputerHand(){
     const hands = ["Rock", "Paper", "Scissors"];
     return hands[getRandomInteger(0,2)];
 }
-
-/*=== Game logic ===
-- Select hands
-- Determine winner
-- Update displays
-- Check win conditions
-=============================================================================*/
-function playRound(){
-    playerSelection = this.textContent;
-    computerSelection = computerPlay();
-    determineWinner();
-    updateDisplays();
-    checkWinConditions();
-}
-
-function determineWinner(){
-    roundLog = `Player plays ${playerSelection}. Computer plays ${computerSelection}.`;
+function determineWinner(playerSelection, computerSelection){
+    let roundLog = `Player plays ${playerSelection}. Computer plays ${computerSelection}.`;
+    let winner = null;
     if (computerSelection === playerSelection){
         roundLog += ` Draw!`;
     } else {
         switch (computerSelection) {
             case "Rock":
                 if (playerSelection === "Paper"){
-                    roundLog += ` Player wins!`;
-                    playerScore += 1;
+                    winner = "Player";
                 } else {
-                    roundLog += ` Computer wins!`;
-                    computerScore += 1;
+                    winner = "Computer";
                 }
             break;
             case "Paper" :
                 if (playerSelection === "Scissors"){
-                    roundLog += ` Player wins!`;
-                    playerScore += 1;
+                    winner = "Player";
                 } else {
-                    roundLog += ` Computer wins!`;
-                    computerScore += 1;
+                    winner = "Computer";
                 }
             break;
             case "Scissors" :
                 if (playerSelection === "Rock"){
-                    roundLog += ` Player wins!`;
-                    playerScore += 1;
+                    winner = "Player";
                 } else {
-                    roundLog += ` Computer wins!`;
-                    computerScore += 1;
+                    winner = "Computer";
                 }
             break;
             default:
                 console.log(`Something went wrong.`);
         }
+        roundLog += ` ${winner} wins!`;
     }
+    return {roundLog: roundLog, winner: winner}
+}
+function updateGameState(logDisplay, roundDisplay, scoreDisplay, results){
+    if (results.winner !== null) results.winner === "Player" ? playerScore += 1 : computerScore += 1;
     roundCounter += 1;
+    logDisplay.textContent = results.roundLog;
+    roundDisplay.textContent = `${roundCounter}`;
+    scoreDisplay.textContent = `${playerScore} - ${computerScore}`;
 }
-
-function updateDisplays(){
-    logDisplay.textContent = roundLog;
-    roundDisplay.textContent = `Round ${roundCounter}`;
-    scoreDisplay.textContent = `Player ${playerScore} - ${computerScore} Computer`;
-}
-
-function checkWinConditions(){
+function checkWinConditions(winnerDisplay, handButtons, pointsToWin){
     if (playerScore >= pointsToWin || computerScore >= pointsToWin) {
         handButtons.forEach(button => {
             if (button.textContent === "Reset") button.classList.remove("hide");
@@ -131,6 +112,9 @@ function checkWinConditions(){
         winnerDisplay.textContent = playerScore > computerScore ? `Player won the game!` : `Computer won the game!`;
         winnerDisplay.classList.remove("invisible");
     }
+}
+function getRandomInteger(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) ) + min;
 }
 
 /*=== Run game ===
